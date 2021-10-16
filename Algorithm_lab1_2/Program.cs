@@ -36,7 +36,7 @@ namespace Algorithm_lab1_2
             };
 
             List<char> clique = FindSingleClique_3(graph);
-            foreach(var e in clique)
+            foreach (var e in clique)
                 Console.WriteLine(e);
         }
 
@@ -195,9 +195,7 @@ namespace Algorithm_lab1_2
             foreach (var e in graph)
                 vertices.Add(e.Key);
 
-            var rnd = new Random();
-            for (int i = 0; i <= 1; i++) //возвращает случайно выбранное число из последовательности
-                clique.Add(vertices[rnd.Next(vertices.Count)]);
+            clique.Add(vertices[vertices.Count-1]);
 
             foreach (var v in vertices)
             {
@@ -210,7 +208,7 @@ namespace Algorithm_lab1_2
                         continue;
                     else
                         isNext = false;
-                    break;
+                        break;
                 }
                 if (isNext)
                     clique.Add(v);
@@ -220,7 +218,7 @@ namespace Algorithm_lab1_2
         }
     }
 
-    public class FenwickTree
+        public class FenwickTree
     {
         public List<int> ft = new List<int>();
 
