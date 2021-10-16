@@ -24,6 +24,20 @@ namespace Algorithm_lab1_2
             //    results.Add(ToCSVString(i, PerformAlgorithm(i)));
 
             //WriteToCSV(results); //записываем в эксель
+
+            var graph = new Dictionary<char, List<char>>
+            {
+                ['A'] = new List<char> { 'B', 'C', 'E' },
+                ['B'] = new List<char> { 'A', 'C', 'D', 'F' },
+                ['C'] = new List<char> { 'A', 'B', 'D', 'F' },
+                ['D'] = new List<char> { 'C', 'E', 'B', 'F' },
+                ['E'] = new List<char> { 'A', 'D' },
+                ['F'] = new List<char> { 'B', 'C', 'D' }
+            };
+
+            List<char> clique = FindSingleClique_3(graph);
+            foreach(var e in clique)
+                Console.WriteLine(e);
         }
 
         public static string ToCSVString(int i, double time)
@@ -61,7 +75,6 @@ namespace Algorithm_lab1_2
             }
             return SelectTime(result);
         }
-
         static double SelectTime(double[] times) //сортировка выбросов
         {
             Array.Sort(times);
@@ -173,6 +186,37 @@ namespace Algorithm_lab1_2
             }
             sortedList.Sort();
             return sortedList;
+        }
+
+        public static List<char> FindSingleClique_3(Dictionary<char, List<char>> graph)
+        {
+            var clique = new List<char>();
+            var vertices = new List<char>();
+            foreach (var e in graph)
+                vertices.Add(e.Key);
+
+            var rnd = new Random();
+            for (int i = 0; i <= 1; i++) //возвращает случайно выбранное число из последовательности
+                clique.Add(vertices[rnd.Next(vertices.Count)]);
+
+            foreach (var v in vertices)
+            {
+                if (clique.Contains(v))
+                    continue;
+                var isNext = true;
+                foreach (var u in clique)
+                {
+                    if (graph[v].Contains(u))
+                        continue;
+                    else
+                        isNext = false;
+                    break;
+                }
+                if (isNext)
+                    clique.Add(v);
+            }
+            clique.Sort();
+            return clique;
         }
     }
 
